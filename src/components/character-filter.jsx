@@ -1,3 +1,6 @@
+// character-filter.jsx - Karakter filtreleme bileşeni
+// Bu bileşen, kullanıcıya çoklu filtreleme imkanı sunar ve filtre değişikliklerini üst bileşene iletir.
+
 import { useState, useEffect } from "react";
 
 import Input from "./ui/input";
@@ -11,13 +14,14 @@ export default function CharacterFilters({
   onFiltersChange,
   resultSummary,
 }) {
+  // Filtre seçenekleri için state
   const [statuses, setStatuses] = useState([]);
   const [species, setSpecies] = useState([]);
   const [genders, setGenders] = useState([]);
   const [localFilters, setLocalFilters] = useState(filters);
   const [showClear, setShowClear] = useState(false);
 
-  // Load filter options
+  // Filtre seçeneklerini API'den yükle
   useEffect(() => {
     async function loadFilterOptions() {
       const statusValues = await getUniqueValues("status");
@@ -32,38 +36,39 @@ export default function CharacterFilters({
     loadFilterOptions();
   }, []);
 
-  // Update local filters when props change
+  // Üstten gelen filtreler değişirse local filtreleri güncelle
   useEffect(() => {
     setLocalFilters(filters);
   }, [filters]);
 
-  // Handle input changes
+  // Input değişikliklerini işle
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLocalFilters((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submit
+  // Form submit edildiğinde filtreleri uygula
   const handleSubmit = (e) => {
     e.preventDefault();
     onFiltersChange(localFilters);
     if (isFilterActive) setShowClear(true);
   };
 
-  // Handle clear filters
+  // Filtreleri temizle
   const handleClearFilters = () => {
     setLocalFilters({ name: "", status: "", species: "", gender: "", type: "" });
     onFiltersChange({ name: "", status: "", species: "", gender: "", type: "" });
     setShowClear(false);
   };
 
-  // Filtre aktif mi kontrolü
+  // Herhangi bir filtre aktif mi?
   const isFilterActive = Object.entries(localFilters).some(
     ([key, value]) => key !== "type" && value && value !== ""
   )
 
   return (
     <form className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 bg-white rounded-xl shadow-card border border-border mb-6 animate-fadeIn" onSubmit={handleSubmit}>
+      {/* İsim filtresi */}
       <div className="flex flex-col gap-1">
         <Label htmlFor="name" className="text-sm font-semibold text-primary-dark">Name</Label>
         <Input
@@ -75,6 +80,7 @@ export default function CharacterFilters({
           className="border border-border rounded-xl px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary text-base font-medium text-gray-900 placeholder:text-gray-400 bg-gray-50"
         />
       </div>
+      {/* Status filtresi */}
       <div className="flex flex-col gap-1">
         <Label htmlFor="status" className="text-sm font-semibold text-primary-dark">Status</Label>
         <select
@@ -90,6 +96,7 @@ export default function CharacterFilters({
           ))}
         </select>
       </div>
+      {/* Species filtresi */}
       <div className="flex flex-col gap-1">
         <Label htmlFor="species" className="text-sm font-semibold text-primary-dark">Species</Label>
         <select
@@ -105,6 +112,7 @@ export default function CharacterFilters({
           ))}
         </select>
       </div>
+      {/* Gender filtresi */}
       <div className="flex flex-col gap-1">
         <Label htmlFor="gender" className="text-sm font-semibold text-primary-dark">Gender</Label>
         <select
@@ -120,6 +128,7 @@ export default function CharacterFilters({
           ))}
         </select>
       </div>
+      {/* Filtrele ve temizle butonları */}
       <div className="flex flex-col gap-1 justify-end">
         <div className={`flex flex-row w-full gap-2 ${showClear ? "" : "md:justify-end"}`}>
           <Button
