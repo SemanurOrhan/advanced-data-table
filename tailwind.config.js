@@ -37,7 +37,7 @@ export default {
         card: '0 2px 8px 0 rgba(16, 30, 54, 0.08)',
       },
       animation: {
-        fadeIn: 'fadeIn 0.5s ease-in',
+        fadeIn: 'fadeIn 0.10s cubic-bezier(0.4,0,0.2,1)',
       },
       keyframes: {
         fadeIn: {
