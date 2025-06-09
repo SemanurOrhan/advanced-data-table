@@ -1,3 +1,6 @@
+// App.jsx - Uygulamanın ana bileşeni
+// Bu dosya, filtreleme, sıralama, sayfalama ve hata yönetimi gibi ana işlevleri içerir.
+
 import { useState, useEffect, useCallback } from "react"
 import CharacterTable from "./components/character-table";
 import CharacterDetail from "./components/character-detail";
@@ -10,18 +13,21 @@ import { fetchCharacters } from "./api/rick-and-morty-char-services"
 
 export default function App() {
   // State management
+  // Karakter verileri, seçili karakter, yüklenme ve hata durumları
   const [characters, setCharacters] = useState([])
   const [selectedCharacter, setSelectedCharacter] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   // Pagination state
+  // Sayfa, toplam sayfa ve toplam sonuç sayısı, sayfa başı gösterilecek satır sayısı
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [totalResults, setTotalResults] = useState(0)
   const [pageSize, setPageSize] = useState(20)
 
   // Filter and sort state
+  // Filtreler ve sıralama ayarları
   const [filters, setFilters] = useState({
     name: "",
     status: "",
@@ -30,10 +36,10 @@ export default function App() {
     type: "",
   })
 
-  // sortConfig kaldırıldığı için local sıralama da kaldırıldı
-  // Sıralama desteği ekle
+  // Sıralama desteği için anahtar ve yön bilgisi
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' })
 
+  // Tablo başlığına tıklanınca sıralama yönünü değiştir
   const handleSort = useCallback((key) => {
     setSortConfig((prev) => {
       if (prev.key === key) {
@@ -43,6 +49,7 @@ export default function App() {
     })
   }, [])
 
+  // Sıralanmış karakterler
   let sortedCharacters = [...characters]
   if (sortConfig.key) {
     sortedCharacters.sort((a, b) => {
@@ -54,7 +61,7 @@ export default function App() {
     })
   }
 
-  // Fetch characters with current filters and pagination
+  // Karakterleri filtre ve sayfa bilgisine göre API'den çek
   const loadCharacters = useCallback(async () => {
     try {
       setLoading(true)
@@ -113,29 +120,30 @@ export default function App() {
     }
   }, [currentPage, filters, pageSize])
 
-  // Load characters on mount and when dependencies change
+  // Bileşen yüklendiğinde ve bağımlılıklar değiştiğinde karakterleri yükle
   useEffect(() => {
     loadCharacters()
   }, [loadCharacters])
 
-  // Handle filter changes
+  // Filtre değiştiğinde filtreleri uygula ve sayfayı başa al
   const handleFilterChange = useCallback((newFilters) => {
     setFilters(newFilters)
     setCurrentPage(1) // Reset to first page when filters change
     setSelectedCharacter(null) // Seçili karakteri de sıfırla
   }, [])
 
-  // Handle pagination
+  // Sayfa değişimi
   const handlePageChange = useCallback((page) => {
     setCurrentPage(page)
   }, [])
 
+  // Sayfa boyutu değişimi
   const handlePageSizeChange = useCallback((size) => {
     setPageSize(size)
     setCurrentPage(1)
   }, [])
 
-  // Handle character selection (toggle)
+  // Karakter seçimi (toggle)
   const handleCharacterSelect = useCallback(
     (character) => {
       if (!character) {
