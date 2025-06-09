@@ -66,16 +66,16 @@ export default function Pagination({ currentPage, totalPages, pageSize, totalRes
 
   return (
     <div className="bg-white rounded-xl shadow-card border border-border p-4 animate-fadeIn">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-sm text-muted font-medium">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 w-full">
+        <div className="text-sm text-muted font-medium text-center md:text-left">
           Showing <span className="font-semibold text-gray-900">{startResult}</span> to{" "}
           <span className="font-semibold text-gray-900">{endResult}</span> of{" "}
           <span className="font-semibold text-gray-900">{totalResults}</span> results
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="flex items-center">
-            <span className="text-sm text-muted mr-3 font-medium">Rows per page:</span>
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 w-full md:w-auto justify-center md:justify-end">
+          <div className="flex items-center w-full sm:w-auto justify-center sm:justify-end">
+            <span className="text-sm text-muted mr-2 font-medium hidden sm:inline">Rows per page:</span>
             <Select value={pageSize.toString()} onChange={e => onPageSizeChange(Number(e.target.value))} className="w-20 h-9 border-border focus:border-primary focus:ring-primary rounded-xl">
               {pageSizeOptions.map((size) => (
                 <option key={size} value={size}>
@@ -85,7 +85,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, totalRes
             </Select>
           </div>
 
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-1 w-full sm:w-auto justify-center sm:justify-end mt-2 sm:mt-0">
             <Button
               variant="outline"
               size="icon"
@@ -101,7 +101,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, totalRes
               {pageNumbers.map((page, index) => {
                 if (page === "ellipsis-start" || page === "ellipsis-end") {
                   return (
-                    <span key={`${page}-${index}`} className="px-3 py-2 text-muted text-sm">
+                    <span key={`${page}-${index}`} className="px-2 py-1 text-muted text-sm">
                       ...
                     </span>
                   )
@@ -114,7 +114,7 @@ export default function Pagination({ currentPage, totalPages, pageSize, totalRes
                     variant={isActive ? undefined : "outline"}
                     size="sm"
                     onClick={() => onPageChange(page)}
-                    className={`h-9 w-9 mx-0.5 transition-all duration-150
+                    className={`h-8 w-8 mx-0.5 transition-all duration-150
                       ${isActive
                         ? "bg-primary/90 border-2 border-primary text-white font-extrabold shadow-lg ring-2 ring-primary/40 z-10"
                         : "border-border text-gray-700 hover:bg-accent hover:border-primary"}

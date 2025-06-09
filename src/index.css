@@ -191,3 +191,43 @@ input:focus, select:focus {
     font-size: 2rem;
   }
 }
+
+/* Tablo scroll düzeltmesi: Küçük ekranlarda scroll bar en altta ve daha geniş ekranda devreye girsin */
+.responsive-table-scroll {
+  overflow-x: auto;
+  width: 100%;
+  position: relative;
+  /* Scroll barı daha belirgin yap */
+  scrollbar-color: #2563eb #f1f5f9;
+  scrollbar-width: thin;
+}
+.responsive-table-scroll::-webkit-scrollbar {
+  height: 14px;
+  background: #f1f5f9;
+}
+.responsive-table-scroll::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 8px;
+  border: 3px solid #f1f5f9;
+}
+
+/* Tablo içi min-width artırıldı, kolonlar esnek */
+.responsive-table-inner {
+  min-width: 1100px;
+  width: max-content;
+}
+
+/* Grid kolonları esnek yap */
+.responsive-table-inner .grid {
+  grid-template-columns: 60px 1.5fr 1fr 1fr 1fr 2fr;
+}
+@media (max-width: 1200px) {
+  .responsive-table-inner {
+    min-width: 950px;
+  }
+}
+@media (max-width: 900px) {
+  .responsive-table-inner {
+    min-width: 700px;
+  }
+}
