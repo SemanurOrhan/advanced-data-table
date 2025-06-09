@@ -11,9 +11,9 @@
 export async function fetchCharacters({ name = '', status = '', gender = '', species = '', page = 1 } = {}) {
   let url = `https://rickandmortyapi.com/api/character/?page=${page}`;
   if (name) url += `&name=${encodeURIComponent(name)}`;
-  if (status) url += `&status=${encodeURIComponent(status)}`;
-  if (gender) url += `&gender=${encodeURIComponent(gender)}`;
-  if (species) url += `&species=${encodeURIComponent(species)}`;
+  if (status) url += `&status=${encodeURIComponent(status.toLowerCase())}`;
+  if (gender) url += `&gender=${encodeURIComponent(gender.toLowerCase())}`;
+  if (species) url += `&species=${encodeURIComponent(species.toLowerCase())}`;
 
   const response = await fetch(url);
   if (!response.ok) {
