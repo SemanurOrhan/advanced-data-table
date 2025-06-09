@@ -50,7 +50,7 @@ const CharacterDetail = ({ character, onClose }) => {
             className="h-32 w-32 md:h-36 md:w-36 rounded-2xl object-cover shadow-lg border-4 border-white mb-4 md:mb-0 md:mr-6"
           />
           <div className="flex flex-col items-center md:items-start w-full">
-            <h2 className="text-xl md:text-2xl font-bold text-primary-dark mb-1 text-center md:text-left w-full whitespace-nowrap overflow-x-auto">{character.name}</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-primary-dark mb-1 text-center md:text-left w-full break-words">{character.name}</h2>
             <div className="flex flex-wrap gap-2 mb-2 justify-center md:justify-start">
               <StatusBadge status={character.status} />
               <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">{character.species}</Badge>
