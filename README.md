@@ -23,9 +23,7 @@ Bu proje, Rick and Morty API kullanılarak filtrelenebilir, sıralanabilir ve sa
 3. Uygulamayı [localhost:5173](http://localhost:5173) adresinde görüntüleyin.
 
 ## Canlı Demo
-Proje Vercel üzerinde yayınlanmıştır: [https://your-vercel-link.vercel.app](https://your-vercel-link.vercel.app)
-
-> Kendi Vercel veya Github Pages linkinizi buraya ekleyin.
+Proje Vercel üzerinde yayınlanmıştır: [https://advanced-data-table-mb.vercel.app/](https://advanced-data-table-mb.vercel.app/)
 
 ## Kullanılan API
 - [https://rickandmortyapi.com/](https://rickandmortyapi.com/)
