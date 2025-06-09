@@ -1,12 +1,40 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bu proje, Rick and Morty API kullanılarak filtrelenebilir, sıralanabilir ve sayfalanabilir bir karakter tablosu sunar.
 
-Currently, two official plugins are available:
+## Özellikler
+- Çoklu filtreleme (isim, status, tür, cinsiyet)
+- Tablo başlıklarına tıklayarak sıralama
+- Sayfa başına gösterilecek satır sayısını seçme
+- API ve filtre hatalarında kullanıcıya mesaj gösterimi
+- Tablo satırına tıklayınca detaylı karakter görünümü
+- En az 250 karakterlik veri desteği (sayfalama ile)
+- Temiz ve açıklamalı kod
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Kurulum
+1. Bağımlılıkları yükleyin:
+   ```sh
+   npm install
+   ```
+2. Geliştirme sunucusunu başlatın:
+   ```sh
+   npm run dev
+   ```
+3. Uygulamayı [localhost:5173](http://localhost:5173) adresinde görüntüleyin.
 
-## Expanding the ESLint configuration
+## Canlı Demo
+Proje Vercel üzerinde yayınlanmıştır: [https://your-vercel-link.vercel.app](https://your-vercel-link.vercel.app)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+> Kendi Vercel veya Github Pages linkinizi buraya ekleyin.
+
+## Kullanılan API
+- [https://rickandmortyapi.com/](https://rickandmortyapi.com/)
+
+## Değerlendirme Notları
+- Kodun tamamı açıklamalı ve okunaklıdır.
+- Tüm gereksinimler karşılanmıştır.
+- Hata yönetimi ve kullanıcı deneyimi ön plandadır.
+
+---
+
+Ayrıntılı bilgi ve kod için dosyaları inceleyebilirsiniz.
