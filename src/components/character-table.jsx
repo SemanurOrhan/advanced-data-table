@@ -2,8 +2,9 @@ import { ChevronDown, ChevronUp, MapPin, Calendar, Tv, User, Heart, Skull, HelpC
 import Badge from "./ui/badge"
 import { Card, CardContent } from "./ui/card"
 import CharacterDetail from "./character-detail"
+import StatusBadge from "./CharacterTable/StatusBadge"
 
-export function CharacterTable({ characters, sortConfig, onSort, onSelect, selectedCharacter }) {
+export default function CharacterTable({ characters, sortConfig, onSort, onSelect, selectedCharacter }) {
   // Define sortable columns
   const sortableColumns = [
     { key: "name", label: "Name" },
@@ -42,13 +43,13 @@ export function CharacterTable({ characters, sortConfig, onSort, onSelect, selec
   return (
     <div className="bg-white rounded-2xl shadow-card border border-border overflow-x-auto animate-fadeIn">
       {/* Table Header */}
-      <div className="bg-accent border-b border-border w-full">
-        <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2 px-2 sm:px-4 md:px-6 lg:px-8 py-4 text-base font-semibold text-primary-dark">
+      <div className="sticky top-0 z-20 bg-gradient-to-b from-white via-accent to-accent border-b-2 border-primary/30 w-full shadow-md shadow-primary/10">
+        <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2 px-2 sm:px-4 md:px-6 lg:px-8 py-5 text-lg font-bold text-primary-dark tracking-wide uppercase select-none">
           <div className="col-span-1"></div> {/* Avatar column */}
           {sortableColumns.map((column) => (
             <div
               key={column.key}
-              className="col-span-1 sm:col-span-2 cursor-pointer select-none hover:text-primary transition-colors flex items-center gap-1"
+              className="col-span-1 sm:col-span-2 cursor-pointer flex items-center gap-1 transition-colors hover:text-primary"
               onClick={() => onSort(column.key)}
             >
               {column.label}
@@ -74,9 +75,9 @@ export function CharacterTable({ characters, sortConfig, onSort, onSelect, selec
               {/* Main Row */}
               <div
                 onClick={() => onSelect(character)}
-                className={`grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2 px-2 sm:px-4 md:px-6 lg:px-8 py-4 cursor-pointer transition-all duration-200 hover:bg-accent items-center ${
-                  isSelected ? "bg-accent border-l-4 border-l-primary" : ""
-                }`}
+                className={`grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2 px-2 sm:px-4 md:px-6 lg:px-8 py-4 cursor-pointer transition-all duration-200 items-center relative
+                  ${isSelected ? "bg-accent border-l-4 border-l-primary ring-2 ring-primary/30 ring-inset shadow-lg shadow-primary/10 z-10" : "hover:bg-accent"}
+                `}
               >
                 {/* Avatar */}
                 <div className="col-span-1 flex items-center justify-center">
@@ -104,10 +105,7 @@ export function CharacterTable({ characters, sortConfig, onSort, onSelect, selec
                 {/* Status */}
                 <div className="col-span-1 sm:col-span-2 flex items-center min-w-[80px] sm:min-w-[120px]">
                   <div className="flex items-center gap-2">
-                    <span className={`inline-flex items-center justify-center h-6 w-6 rounded-full ${statusInfo.color} bg-opacity-10 border border-opacity-0`}>
-                      <StatusIcon className={`h-4 w-4 ${statusInfo.color.replace('bg-', 'text-')}`} />
-                    </span>
-                    <span className={`font-medium ${statusInfo.textColor} text-xs sm:text-base`}>{character.status}</span>
+                    <StatusBadge status={character.status} />
                   </div>
                 </div>
 
