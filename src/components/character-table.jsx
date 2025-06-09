@@ -47,7 +47,7 @@ export default function CharacterTable({ characters, sortConfig, onSort, onSelec
                   onClick={() => onSelect(character)}
                   className={`grid gap-2 px-2 sm:px-4 md:px-6 lg:px-8 py-3 md:py-4 cursor-pointer transition-all duration-200 items-center relative` +
                     (isSelected ? " bg-accent border-l-4 border-l-primary ring-2 ring-primary/30 ring-inset shadow-lg shadow-primary/10 z-10" : " hover:bg-accent")}
-                  style={{gridTemplateColumns: '60px 1.5fr 1fr 1fr 1fr 2fr', width: '100%'}}
+                  style={{gridTemplateColumns: '60px 1.5fr 1fr 1fr 1fr 2fr'}}
                 >
                   <div className="flex items-center justify-center">
                     <div className="relative h-10 w-10 md:h-12 md:w-12 rounded-full overflow-hidden ring-2 ring-white shadow-card">
