@@ -1,0 +1,162 @@
+import { ChevronDown, ChevronUp, MapPin, Calendar, Tv, User, Heart, Skull, HelpCircle } from "lucide-react"
+import Badge from "./ui/badge"
+import { Card, CardContent } from "./ui/card"
+import CharacterDetail from "./character-detail"
+
+export function CharacterTable({ characters, sortConfig, onSort, onSelect, selectedCharacter }) {
+  // Define sortable columns
+  const sortableColumns = [
+    { key: "name", label: "Name" },
+    { key: "status", label: "Status" },
+    { key: "species", label: "Species" },
+    { key: "gender", label: "Gender" },
+  ]
+
+  // Render sort icon
+  const renderSortIcon = (columnKey) => {
+    if (!sortConfig || !sortConfig.key) {
+      return <ChevronDown className="h-4 w-4 ml-1 opacity-30" />
+    }
+    if (sortConfig.key !== columnKey) {
+      return <ChevronDown className="h-4 w-4 ml-1 opacity-30" />
+    }
+    return sortConfig.direction === "asc" ? (
+      <ChevronUp className="h-4 w-4 ml-1 text-blue-600" />
+    ) : (
+      <ChevronDown className="h-4 w-4 ml-1 text-blue-600" />
+    )
+  }
+
+  // Get status color and icon
+  const getStatusInfo = (status) => {
+    switch (status) {
+      case "Alive":
+        return { color: "bg-green-500", icon: Heart, textColor: "text-green-700" }
+      case "Dead":
+        return { color: "bg-red-500", icon: Skull, textColor: "text-red-700" }
+      default:
+        return { color: "bg-gray-400", icon: HelpCircle, textColor: "text-gray-700" }
+    }
+  }
+
+  return (
+    <div className="bg-white rounded-2xl shadow-card border border-border overflow-x-auto animate-fadeIn">
+      {/* Table Header */}
+      <div className="bg-accent border-b border-border w-full">
+        <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2 px-2 sm:px-4 md:px-6 lg:px-8 py-4 text-base font-semibold text-primary-dark">
+          <div className="col-span-1"></div> {/* Avatar column */}
+          {sortableColumns.map((column) => (
+            <div
+              key={column.key}
+              className="col-span-1 sm:col-span-2 cursor-pointer select-none hover:text-primary transition-colors flex items-center gap-1"
+              onClick={() => onSort(column.key)}
+            >
+              {column.label}
+              {renderSortIcon(column.key)}
+            </div>
+          ))}
+          <div className="col-span-2 sm:col-span-3 flex items-center gap-1">
+            <MapPin className="h-5 w-5 mr-1 text-secondary" />
+            Location
+          </div>
+        </div>
+      </div>
+
+      {/* Table Body */}
+      <div className="divide-y divide-border w-full">
+        {characters.map((character) => {
+          const isSelected = selectedCharacter?.id === character.id
+          const statusInfo = getStatusInfo(character.status)
+          const StatusIcon = statusInfo.icon
+
+          return (
+            <div key={character.id} className="transition-all duration-200">
+              {/* Main Row */}
+              <div
+                onClick={() => onSelect(character)}
+                className={`grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2 px-2 sm:px-4 md:px-6 lg:px-8 py-4 cursor-pointer transition-all duration-200 hover:bg-accent items-center ${
+                  isSelected ? "bg-accent border-l-4 border-l-primary" : ""
+                }`}
+              >
+                {/* Avatar */}
+                <div className="col-span-1 flex items-center justify-center">
+                  <div className="relative h-12 w-12 rounded-full overflow-hidden ring-2 ring-white shadow-card">
+                    <img
+                      src={character.image || "/placeholder.svg"}
+                      alt={character.name}
+                      width={48}
+                      height={48}
+                      className="object-cover h-12 w-12 rounded-full"
+                    />
+                  </div>
+                </div>
+
+                {/* Name */}
+                <div className="col-span-1 sm:col-span-2 flex items-center min-w-[80px] sm:min-w-[120px]">
+                  <div>
+                    <p className="font-semibold text-gray-900 text-base sm:text-lg hover:text-primary transition-colors">
+                      {character.name}
+                    </p>
+                    {character.type && <p className="text-xs text-muted mt-0.5">{character.type}</p>}
+                  </div>
+                </div>
+
+                {/* Status */}
+                <div className="col-span-1 sm:col-span-2 flex items-center min-w-[80px] sm:min-w-[120px]">
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-flex items-center justify-center h-6 w-6 rounded-full ${statusInfo.color} bg-opacity-10 border border-opacity-0`}>
+                      <StatusIcon className={`h-4 w-4 ${statusInfo.color.replace('bg-', 'text-')}`} />
+                    </span>
+                    <span className={`font-medium ${statusInfo.textColor} text-xs sm:text-base`}>{character.status}</span>
+                  </div>
+                </div>
+
+                {/* Species */}
+                <div className="col-span-1 sm:col-span-2 flex items-center min-w-[80px] sm:min-w-[120px]">
+                  <Badge variant="outline" className="bg-purple-50 text-purple-600 border-none px-2 sm:px-3 py-1 font-semibold">
+                    {character.species}
+                  </Badge>
+                </div>
+
+                {/* Gender */}
+                <div className="col-span-1 sm:col-span-2 flex items-center min-w-[80px] sm:min-w-[120px]">
+                  <div className="flex items-center gap-1 text-muted">
+                    <User className="h-5 w-5" />
+                    <span className="text-xs sm:text-base font-medium">{character.gender}</span>
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div className="col-span-2 sm:col-span-3 flex flex-col justify-center min-w-[120px] sm:min-w-[180px]">
+                  <span className="text-gray-900 font-semibold text-xs sm:text-base truncate">{character.location.name}</span>
+                  <span className="text-xs text-muted">Current location</span>
+                </div>
+              </div>
+              {/* Expanded Detail Row */}
+              {isSelected && (
+                <div className="w-full flex justify-center py-6 animate-fadeIn">
+                  <CharacterDetail character={character} onClose={() => onSelect(null)} />
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+// Helper component for info cards
+function InfoCard({ label, value, icon }) {
+  return (
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200 hover:shadow-md transition-shadow">
+      <div className="flex items-center space-x-3">
+        <span className="text-2xl">{icon}</span>
+        <div>
+          <p className="text-sm font-medium text-gray-500">{label}</p>
+          <p className="text-base font-semibold text-gray-900">{value}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
