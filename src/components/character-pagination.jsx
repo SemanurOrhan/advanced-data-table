@@ -1,11 +1,8 @@
-"use client"
-
-
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Button from "./ui/button"
 import Select from "./ui/select"
 
-export function Pagination({ currentPage, totalPages, pageSize, totalResults, onPageChange, onPageSizeChange }) {
+export default function Pagination({ currentPage, totalPages, pageSize, totalResults, onPageChange, onPageSizeChange }) {
   // Generate page numbers to display
   const getPageNumbers = () => {
     const pages = []
@@ -65,6 +62,8 @@ export function Pagination({ currentPage, totalPages, pageSize, totalResults, on
   const startResult = totalResults === 0 ? 0 : (currentPage - 1) * pageSize + 1
   const endResult = Math.min(currentPage * pageSize, totalResults)
 
+  // Sayfa boyutu değiştiğinde API'den yeni veri çekilmesi için App.jsx'de pageSize kullanılmalı
+
   return (
     <div className="bg-white rounded-xl shadow-card border border-border p-4 animate-fadeIn">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -95,7 +94,7 @@ export function Pagination({ currentPage, totalPages, pageSize, totalResults, on
               aria-label="Previous page"
               className="h-9 w-9 border-border hover:bg-accent hover:border-primary"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-4 w-4 text-gray-400 group-hover:text-primary transition-colors" />
             </Button>
 
             <div className="flex items-center">
@@ -108,17 +107,19 @@ export function Pagination({ currentPage, totalPages, pageSize, totalResults, on
                   )
                 }
 
+                const isActive = currentPage === page;
                 return (
                   <Button
                     key={`page-${page}`}
-                    variant={currentPage === page ? "default" : "outline"}
+                    variant={isActive ? undefined : "outline"}
                     size="sm"
                     onClick={() => onPageChange(page)}
-                    className={`h-9 w-9 mx-0.5 ${
-                      currentPage === page
-                        ? "bg-gradient-to-r from-primary to-secondary text-white shadow-card"
-                        : "border-border hover:bg-accent hover:border-primary"
-                    }`}
+                    className={`h-9 w-9 mx-0.5 transition-all duration-150
+                      ${isActive
+                        ? "bg-primary/90 border-2 border-primary text-white font-extrabold shadow-lg ring-2 ring-primary/40 z-10"
+                        : "border-border text-gray-700 hover:bg-accent hover:border-primary"}
+                    `}
+                    aria-current={isActive ? "page" : undefined}
                   >
                     {page}
                   </Button>
@@ -134,7 +135,7 @@ export function Pagination({ currentPage, totalPages, pageSize, totalResults, on
               aria-label="Next page"
               className="h-9 w-9 border-border hover:bg-accent hover:border-primary"
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-primary transition-colors" />
             </Button>
           </div>
         </div>
